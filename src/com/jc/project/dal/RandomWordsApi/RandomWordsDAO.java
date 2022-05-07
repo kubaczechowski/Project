@@ -22,7 +22,7 @@ public class RandomWordsDAO implements IRandomWordsDAO {
         try {
             url = new URL(URL);
         } catch (MalformedURLException e) {
-            throw new DALException("Couldn't create URL..");
+            throw new DALException();
         }
         convertStringToObject = new ConvertStringToObject();
     }
