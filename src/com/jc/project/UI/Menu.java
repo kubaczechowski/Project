@@ -44,6 +44,7 @@ public class Menu implements IMenu{
         try {
             apiOperations.getRecordings();
         } catch (UIException e) {
+            System.out.println(e.getMessage());
             System.out.println(ExceptionStringConstants.COULDNT_PULL_RECORDINGS);
         }
     }
@@ -53,8 +54,7 @@ public class Menu implements IMenu{
         try {
             apiOperations.pullRandomWords();
         } catch (UIException e) {
-            //exception bubbles up through all layers and
-            //appropriate message is presented to the user
+            System.out.println(e.getMessage());
             System.out.println(ExceptionStringConstants.
                     COULDNT_PULL_RANDOM_WORDS);
         }

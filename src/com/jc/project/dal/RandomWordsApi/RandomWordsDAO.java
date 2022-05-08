@@ -15,6 +15,8 @@ import java.util.List;
 import java.util.Scanner;
 
 public class RandomWordsDAO implements IRandomWordsDAO {
+    private final static int CONNECTION_TIMEOUT =2_000;
+    private final static int READ_TIMEOUT =3_000;
     private static final String URL = "https://random-words-api.vercel.app/word";
     private final URL url;
     private final ConvertStringToObject convertStringToObject;
@@ -57,19 +59,16 @@ public class RandomWordsDAO implements IRandomWordsDAO {
 
     private String getWordAsString() throws DALException {
         StringBuilder stringBuilder = new StringBuilder();
-        try{
+        int responseCode = 0;
+        try {
             HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+            conn.setConnectTimeout(CONNECTION_TIMEOUT);
+            conn.setReadTimeout(READ_TIMEOUT);
             conn.setRequestMethod("GET");
             conn.connect();
 
             //Check if connection is made
-            int responseCode = conn.getResponseCode();
-
-            // 200 OK
-            if (responseCode != 200) {
-                throw new DALException("Http response code isn't 200 OK. " +
-                        "Response code: " + responseCode);
-            }
+            responseCode = conn.getResponseCode();
 
             Scanner scanner = new Scanner(url.openStream());
 
@@ -79,10 +78,11 @@ public class RandomWordsDAO implements IRandomWordsDAO {
             //Close the scanner
             scanner.close();
 
-        } catch (ProtocolException e) {
-            throw new DALException("Protocol Exception ...");
         } catch (IOException e) {
-            throw new DALException("IOException ...");
+            if (responseCode!= 200)
+                throw new DALException("Problem is probably on the server side." + " Response code: " + responseCode);
+            else
+                throw new DALException("Couldn't retrieve data from a server");
         }
         return stringBuilder.toString();
     }

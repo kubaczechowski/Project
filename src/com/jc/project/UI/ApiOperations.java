@@ -13,7 +13,6 @@ import com.jc.project.bll.exception.BLLException;
 
 import java.util.List;
 import java.util.Map;
-import java.util.concurrent.Callable;
 
 public class ApiOperations {
 
@@ -30,15 +29,17 @@ public class ApiOperations {
 
     public void getRecordings() throws UIException {
         var words = getRandomWords();
-        Map<Word, Recording> recordingsMap;
-        try {
-            System.out.println(RandomWordsStringConst.PULLING_RECORDINGS);
-             recordingsMap = bllFacade.getRecordings(words);
-        } catch (BLLException e) {
-            throw new UIException();
-        }
-        if(recordingsMap!=null){
-            showRecordingsToTheUser(recordingsMap);
+        if(words!=null){
+            Map<Word, Recording> recordingsMap;
+            try {
+                System.out.println(RandomWordsStringConst.PULLING_RECORDINGS);
+                recordingsMap = bllFacade.getRecordings(words);
+            } catch (BLLException e) {
+                throw new UIException(e.getMessage());
+            }
+            if(recordingsMap!=null){
+                showRecordingsToTheUser(recordingsMap);
+            }
         }
     }
 
@@ -61,7 +62,7 @@ public class ApiOperations {
     }
 
 
-    private List<Word> getRandomWords(){
+    private List<Word> getRandomWords() throws UIException {
         //how many random words user wants to pull
         var noOfWordsToPull = HelperConsole.insertInt(RandomWordsStringConst.
                 INSERT_NO_OF_WORDS_TO_PULL);
@@ -73,13 +74,13 @@ public class ApiOperations {
             isCorrect = bllFacade.inputNumberIsInTheRange(noOfWordsToPull);
         }
 
-        List<Word> words =null;
+        List<Word> words;
         //get random words
         try {
             System.out.println(RandomWordsStringConst.PULLING_RANDOM_WORDS);
             words = bllFacade.getRandomWords(noOfWordsToPull);
         } catch (BLLException e) {
-            System.out.println(ExceptionStringConstants.COULDNT_PULL_RANDOM_WORDS);
+            throw new UIException(e.getMessage());
         }
         return words;
     }
