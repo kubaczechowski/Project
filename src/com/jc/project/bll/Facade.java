@@ -20,7 +20,7 @@ public class Facade implements IFacade{
         try {
             dalFacade = new DALFacade();
         } catch (DALException e) {
-            throw new BLLException("Couldn't connect to words API ..");
+            throw new BLLException();
         }
     }
 
@@ -43,7 +43,7 @@ public class Facade implements IFacade{
         try {
            return dalFacade.getRecordings(words);
         } catch (DALException e) {
-           throw new BLLException("Couldn't get recordings");
+           throw new BLLException(e.getMessage());
         }
     }
 }

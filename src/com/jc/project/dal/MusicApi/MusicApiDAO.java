@@ -17,6 +17,8 @@ import java.util.*;
  * to prevent other participant from easily finding this repository by API name
  */
 public class MusicApiDAO implements IMusicApiDto {
+    private final static int CONNECTION_TIMEOUT =1_000;
+    private final static int READ_TIMEOUT =2_000;
     private final ConvertStringToObject converter;
     private static final String URL_BEGIN =
             "https://musicbrainz.org/ws/2/recording/?query=recording:";
@@ -54,9 +56,7 @@ public class MusicApiDAO implements IMusicApiDto {
             }
             return map;
 
-        }  catch (DALException e) {
-            throw new DALException();
-        } catch (InterruptedException e) {
+        }  catch (InterruptedException e) {
             return null; //then we just want to return if the app was interrupted or forced to close
         }
     }
@@ -71,16 +71,20 @@ public class MusicApiDAO implements IMusicApiDto {
      * @throws DALException we use custom exceptions. each layer has its own exception
      */
     public String getRecordingAsString(Word word) throws DALException {
+        int responseCode =0;
         StringBuilder stringBuilder = new StringBuilder();
         try {
             String URL = URL_BEGIN + word.getWord().replace(" ", "") + URL_END;
             URL url = new URL(URL);
             HttpURLConnection conn = (HttpURLConnection) url.openConnection();
             conn.setRequestMethod("GET");
+            conn.setConnectTimeout(CONNECTION_TIMEOUT);
+            conn.setReadTimeout(READ_TIMEOUT);
             conn.setRequestProperty("CustomHeader", HEADER);
             conn.connect();
 
-            checkResponseCode(conn);
+            //Check if connection is established
+            responseCode = conn.getResponseCode();
 
             Scanner scanner = new Scanner(url.openStream());
 
@@ -96,19 +100,12 @@ public class MusicApiDAO implements IMusicApiDto {
         } catch (ProtocolException e) {
             throw new DALException("ProtocolException...");
         } catch (IOException e) {
-            throw new DALException("IOException...");
+            if (responseCode!= 200)
+                throw new DALException("Problem is probably on the server side. " + "Response code: " + responseCode);
+            else
+                throw new DALException("Couldn't retrieve data from a server");
         }
     }
 
-    private void checkResponseCode(HttpURLConnection conn) throws IOException, DALException {
-        //Check if connection is established
-        int responseCode = conn.getResponseCode();
 
-        // 200 OK
-        if (responseCode != 200) {
-            throw new DALException("Http response code isn't 200 OK. " +
-                    "Response code: " + responseCode);
-        }
-
-    }
 }
