@@ -42,7 +42,7 @@ public class MusicApiDAO implements IMusicApiDto {
         try {
             for (var word : wordsList
                  ) {
-                Thread.sleep(1200);
+                Thread.sleep(1_800);
                 var recordingString = getRecordingAsString(word);
                 var recordingIsFound = converter.isRecordingFound(recordingString);
                 if(recordingIsFound){
@@ -89,6 +89,7 @@ public class MusicApiDAO implements IMusicApiDto {
             }
             //Close the scanner
             scanner.close();
+
             return stringBuilder.toString();
         } catch (MalformedURLException e) {
             throw new DALException("There is a problem with URL");
