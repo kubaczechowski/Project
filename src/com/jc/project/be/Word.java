@@ -25,11 +25,9 @@ public class Word implements Comparable<Word>{
 
     @Override
     public String toString() {
-        return "Word{" +
-                "word='" + word + '\'' +
-                ", definition='" + definition + '\'' +
-                ", pronunciation='" + pronunciation + '\'' +
-                '}';
+        return String.format("Word --> "+ getWord()+ "%n "+
+                "\t"+ "Definition: "+ getDefinition() + "%n "+
+                "\t"+ "Pronunciation: "+ getPronunciation() + "%n ");
     }
 
     @Override

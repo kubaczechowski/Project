@@ -45,10 +45,8 @@ public class Recording {
 
     @Override
     public String toString() {
-        return "Recording{" +
-                "artistName='" + artistName + '\'' +
-                ", albumName='" + albumName + '\'' +
-                ", recordingTitle='" + recordingTitle + '\'' +
-                '}';
+        return String.format("Recording Title: " + getRecordingTitle() + "%n "+
+                "\t"+  "Artist Name: " + getArtistName() + "%n "+
+                "\t"+  "Album Name:  " + getAlbumName());
     }
 }

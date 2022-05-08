@@ -32,6 +32,7 @@ public class ApiOperations {
         var words = getRandomWords();
         Map<Word, Recording> recordingsMap;
         try {
+            System.out.println(RandomWordsStringConst.PULLING_RECORDINGS);
              recordingsMap = bllFacade.getRecordings(words);
         } catch (BLLException e) {
             throw new UIException();
@@ -42,21 +43,23 @@ public class ApiOperations {
     }
 
     private void showRecordingsToTheUser(Map<Word, Recording> recordingsMap) {
-        System.out.println("Recordings");
+        System.out.println(RandomWordsStringConst.REC);
         int i =0;
         for (var word: recordingsMap.keySet()
              ) {
             System.out.println(StringConstants.DIVIDER);
-            System.out.println("Pair "+ ++i);
+            System.out.println(RandomWordsStringConst.PAIR+ ++i);
             System.out.println(word);
             var recording = recordingsMap.get(word);
             if(recording==null)
-                System.out.println("No recording found!");
+                System.out.println(RandomWordsStringConst.NO_RECORDINGS);
             else
                 System.out.println(recording);
+
         }
         System.out.println(StringConstants.DIVIDER);
     }
+
 
     private List<Word> getRandomWords(){
         //how many random words user wants to pull
@@ -72,16 +75,12 @@ public class ApiOperations {
         }
 
         List<Word> words =null;
-        //get that words
+        //get random words
         try {
             System.out.println(RandomWordsStringConst.PULLING_RANDOM_WORDS);
             words = bllFacade.getRandomWords(noOfWordsToPull);
         } catch (BLLException e) {
             System.out.println(ExceptionStringConstants.COULDNT_PULL_RANDOM_WORDS);
-            //we may latter want to log the exception, but we don't want to
-            //expose our application structure to the user
-            //we won't bubble up exception, we will just let the user know
-            //that we couldn't pull words
         }
         return words;
     }
@@ -89,18 +88,17 @@ public class ApiOperations {
 
     public void pullRandomWords() throws UIException {
         var words = getRandomWords();
-        //display pulled words in a nice way
         if(words!=null){
-
             System.out.println(RandomWordsStringConst.PULLED_WORDS);
             System.out.println(StringConstants.DIVIDER);
             for (var word: words
                  ) {
                 System.out.println(word);
             }
-            System.out.println(StringConstants.DIVIDER);
         }
 
     }
+
+
 
 }
