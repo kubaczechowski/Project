@@ -69,8 +69,7 @@ public class ApiOperations {
         //validate and if the input is wrong try again
         var isCorrect = bllFacade.inputNumberIsInTheRange(noOfWordsToPull);
         while (!isCorrect){
-            noOfWordsToPull = HelperConsole.insertInt(RandomWordsStringConst.NO_OF_WORDS_IN_RANGE +
-                    RandomWordsStringConst.INSERT_NO_OF_WORDS_TO_PULL);
+            noOfWordsToPull = HelperConsole.insertInt(RandomWordsStringConst.NO_OF_WORDS_IN_RANGE);
             isCorrect = bllFacade.inputNumberIsInTheRange(noOfWordsToPull);
         }
 
