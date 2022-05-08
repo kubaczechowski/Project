@@ -1,5 +1,6 @@
 package com.jc.project.bll;
 
+import com.jc.project.be.Recording;
 import com.jc.project.be.Word;
 import com.jc.project.bll.exception.BLLException;
 import com.jc.project.bll.validations.Validator;
@@ -8,6 +9,7 @@ import com.jc.project.dal.IDALFacade;
 import com.jc.project.dal.exception.DALException;
 
 import java.util.List;
+import java.util.Map;
 
 public class Facade implements IFacade{
     private final IDALFacade dalFacade;
@@ -33,6 +35,15 @@ public class Facade implements IFacade{
             return dalFacade.getRandomWords(noOfWordsToPull);
         } catch (DALException e) {
             throw new BLLException(e.getMessage());
+        }
+    }
+
+    @Override
+    public Map<Word, Recording> getRecordings(List<Word> words) throws BLLException {
+        try {
+           return dalFacade.getRecordings(words);
+        } catch (DALException e) {
+           throw new BLLException("Couldn't get recordings");
         }
     }
 }

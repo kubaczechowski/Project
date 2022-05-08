@@ -10,42 +10,54 @@ import com.jc.project.UI.utils.OptionsHelper;
 import java.util.Arrays;
 
 public class Menu implements IMenu{
-    private RandomWordsOperation randomWordsOperation;
+    private ApiOperations apiOperations;
 
 
     @Override
     public void StartUi() {
-        if(randomWordsOperation==null){
+        if(apiOperations ==null){
             try {
-                randomWordsOperation = new RandomWordsOperation();
+                apiOperations = new ApiOperations();
             } catch (UIException e) {
                 System.out.println(ExceptionStringConstants.COULDNT_CONNECT_TO_API);
             }
         }
 
-        if(randomWordsOperation!= null){
+        if(apiOperations != null){
             greetUser();
             showMenu();
             var  choice = getChoice();
             while(choice != Options.EXIT){
-                if(choice == Options.PULL_RANDOM_WORDS) {
-                    try {
-                        randomWordsOperation.pullRandomWords();
-                    } catch (UIException e) {
-                        //exception bubbles up through all layers and
-                        //appropriate message is presented to the user
-                        System.out.println(ExceptionStringConstants.
-                                COULDNT_PULL_RANDOM_WORDS);
-                    }
+                switch (choice){
+                    case PULL_RANDOM_WORDS -> pullRandomWords();
+                    case PULL_RECORDINGS_INFO -> pullRecordings();
                 }
-
                 showMenu();
                 choice = getChoice();
-
             }
             showApplicationHasFinished();
         }
 
+    }
+
+    private void pullRecordings(){
+        try {
+            apiOperations.getRecordings();
+        } catch (UIException e) {
+            System.out.println(ExceptionStringConstants.COULDNT_PULL_RECORDINGS);
+        }
+    }
+
+
+    private void pullRandomWords(){
+        try {
+            apiOperations.pullRandomWords();
+        } catch (UIException e) {
+            //exception bubbles up through all layers and
+            //appropriate message is presented to the user
+            System.out.println(ExceptionStringConstants.
+                    COULDNT_PULL_RANDOM_WORDS);
+        }
     }
 
     private void showMenu() {
@@ -77,7 +89,6 @@ public class Menu implements IMenu{
     }
 
     private void showApplicationHasFinished() {
-
         System.out.println(StringConstants.APPLICATION_FINISHED);
     }
 }

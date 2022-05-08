@@ -6,4 +6,7 @@ public class ExceptionStringConstants {
 
     public static final String COULDNT_PULL_RANDOM_WORDS =
             "Couldn't pull random words.. ";
+
+    public static final String COULDNT_PULL_RECORDINGS =
+            "Couldn't pull recordings.. ";
 }
