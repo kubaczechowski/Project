@@ -1,14 +1,15 @@
 package com.jc.project.dal.RandomWordsApi.converter;
 
 import com.jc.project.be.Word;
+import com.jc.project.dal.utlis.Converter;
 
 
-public class ConvertStringToObject {
+public class ConvertStringToObject extends Converter {
     private static final String WORD= "\"word\": \"";
     private static final String DEFINITION= "\"definition\": \"";
     private static final String PRONUNCIATION = "\"pronunciation\": \"";
 
-    private static final String END = "\"";
+
 
 
 
@@ -19,9 +20,6 @@ public class ConvertStringToObject {
         return new Word(word, definition, pron);
     }
 
-    public static String getStringInBetweenCustom(String start, String end, String str){
-        return str.substring(str.lastIndexOf(start)+start.length())
-                .split(end)[0];
-    }
+
 
 }
