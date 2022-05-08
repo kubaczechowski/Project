@@ -13,8 +13,8 @@ public class RandomWordsStringConst {
     public static final String PULLING_RECORDINGS = "Pulling recordings..." ;
     public static final String NO_RECORDINGS = "No recording found!";
 
-    public static final String REC = "No recording found!";
-    public static final String PAIR = "No recording found!";
+    public static final String REC = "Recordings";
+    public static final String PAIR = "Pair ";
 
 
 }
