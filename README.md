@@ -16,7 +16,8 @@ git clone https://github.com/kubaczechowski/Project.git ProjectAPI
 Project is written in Java 17. The development environment is IntelliJ IDEA. In order to build and run project we need to provide the path to the Main.java class. The path is: `com.jc.project.UI.Main`
 
 ## How to deploy project to Docker
-Docker file is already configured and committed to the repository. We need to create an image and a container as shown below. 
+Please bear in mind that before we deploy to docker we need to at least once build project in our IDEA (we copy `out/production` folder to the image).
+Docker file is already configured and committed to the repository. We need to create an image and a container as shown below.
 ```Docker
 docker build -t project-api .
 docker run -i -t  project-api
