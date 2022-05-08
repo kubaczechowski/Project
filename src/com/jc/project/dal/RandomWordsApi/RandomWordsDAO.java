@@ -39,7 +39,16 @@ public class RandomWordsDAO implements IRandomWordsDAO {
         for (int i = 0; i < numberOfWords; i++) {
             var wordAsString = getWordAsString();
             var word = convertStringToObject.convertStringToWord(wordAsString);
-            wordsList.add(word);
+            if(wordsList.contains(word)){
+                var wordAsString2 =  getWordAsString();
+                var word2 = convertStringToObject.convertStringToWord(wordAsString2);
+                while (wordsList.contains(word2)){
+                    wordAsString2 =  getWordAsString();
+                    word2 = convertStringToObject.convertStringToWord(wordAsString2);
+                }
+                wordsList.add(word2);
+            }else
+                wordsList.add(word);
         }
         return wordsList;
     }
