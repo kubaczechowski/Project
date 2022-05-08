@@ -1,7 +1,5 @@
-package com.jc.project;
+package com.jc.project.UI;
 
-import com.jc.project.UI.IMenu;
-import com.jc.project.UI.Menu;
 
 
 public class Main {
