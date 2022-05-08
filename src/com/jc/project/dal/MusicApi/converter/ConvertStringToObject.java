@@ -25,7 +25,7 @@ public class ConvertStringToObject extends Converter {
         return new Recording(artistName, albumTitle, recordingTitle);
 
     }
-    
+
     public boolean isRecordingFound(String recordingString) throws DALException {
         var recordingStr = getStringInBetweenCustom("\"count\":", ",", recordingString);
         try {
