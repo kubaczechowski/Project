@@ -28,5 +28,5 @@ In the menu user has three options:
 * they can retrieve only random words (first part of the assignment) - **`press 1`**
 * they can retrieve recordings based on random words - **`press 2`**
 
-Then regardless of whether a user has chosen an option 1 or 2 they need to insert a number in the range between 5 and 20 inclusive.
-In the case a user provides number out of the range 5-20  / type of data other than natural number, they will be asked to provide answer again. 
+Then regardless of whether the user has chosen an option 1 or 2 they need to insert a number in the range between 5 and 20 inclusive.
+In the case the user provides a number out of the range 5-20  / type of data other than natural number, they will be asked to provide answer again. 
